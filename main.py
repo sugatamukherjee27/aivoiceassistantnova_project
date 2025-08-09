@@ -24,7 +24,7 @@ def clean_response(text):
 
 def ai_response(prompt):
     try:
-        genai.configure(api_key="AIzaSyAUXQFnSSPinZY-hFLFU6U187Nuo5hehwc")  
+        genai.configure(api_key=api_key)  
         model = genai.GenerativeModel('gemini-2.5-flash')  
         response = model.generate_content(prompt)
         if response.text:
@@ -136,4 +136,5 @@ if __name__ == "__main__":
             user_command = listen_for_command()
             print(f"Command received: {user_command}")
             if user_command:
+
                 process_command(user_command)
