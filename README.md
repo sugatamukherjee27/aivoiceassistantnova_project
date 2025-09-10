@@ -9,10 +9,6 @@ Nova is a friendly voice assistant that responds to your commands and helps with
 - *Time Awareness*: Ask for the current date and time
 - *Pleasant Voice*: Nova speaks with clear, natural-sounding speech
 
-# API Key used:
-- For fetching news: newsapi_key = 0704bae53cc3b9fa8a127956804009d8
-- For prompt: gemini_api_key = AIzaSyAUXQFnSSPinZY-hFLFU6U187Nuo5hehwc
-
 ## How to Use 
 1. *Wake Nova* by saying:
    - "Nova"
