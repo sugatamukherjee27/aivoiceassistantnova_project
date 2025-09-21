@@ -84,7 +84,7 @@ def process_command(command):
         speak("Opening LinkedIn.")
 
     elif 'news' in command:
-        api_key = "0704bae53cc3b9fa8a127956804009d8"
+        api_key = "your_newsapi_key"
         speak("Fetching top news...")   
         headlines = fetch_news(api_key)
         if headlines:
@@ -138,3 +138,4 @@ if __name__ == "__main__":
             if user_command:
 
                 process_command(user_command)
+
