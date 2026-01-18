@@ -24,7 +24,7 @@ Nova is a friendly voice assistant that responds to your commands and helps with
    - Ask any general question
 
 ## Technical Requirements ⚙
-- Python 3.7
+- Python 3.11 and so on
 - Required libraries (install via pip install -r requirements.txt):
   speech_recognition
   requests
