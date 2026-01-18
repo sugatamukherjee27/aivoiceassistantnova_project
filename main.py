@@ -1,19 +1,26 @@
 import speech_recognition as sr
 import re
+import os
+import time
 import requests 
 import datetime
 import webbrowser
 import pyttsx3
 from pytube import Search
-import google.generativeai as genai
+from google import genai
 
 def speak(text, rate=150):
+    global IS_SPEAKING
+    IS_SPEAKING = True
+
     engine = pyttsx3.init()
     voices = engine.getProperty('voices')
     engine.setProperty('voice', voices[1].id)  
     engine.setProperty("rate", rate)
     engine.say(text)
     engine.runAndWait()
+    time.sleep(0.5)
+    IS_SPEAKING = False
 
 def clean_response(text):
     text = re.sub(r"\*\*(.*?)\*\*", r"\1", text)  # **bold**
@@ -24,16 +31,16 @@ def clean_response(text):
 
 def ai_response(prompt):
     try:
-        genai.configure(api_key=api_key)  
-        model = genai.GenerativeModel('gemini-2.5-flash')  
-        response = model.generate_content(prompt)
-        if response.text:
-            return response.text.strip()
-        else:
-            return "Sorry, I couldn't generate a response."       
+        client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+        response = client.models.generate_content(
+            model="gemma-3-4b-it",
+            contents=prompt
+        )
+        return response.text.strip()
     except Exception as e:
         print(f"[Gemini Error] {e}")
-        return f"Sorry, I encountered an error: {str(e)}"
+        speak("I'm having trouble reaching the AI service right now.")
+        return ""
 
 def play_youtube_video(query):
     try:
@@ -84,7 +91,7 @@ def process_command(command):
         speak("Opening LinkedIn.")
 
     elif 'news' in command:
-        api_key = "your_newsapi_key"
+        api_key = "News_api_key"
         speak("Fetching top news...")   
         headlines = fetch_news(api_key)
         if headlines:
@@ -111,6 +118,9 @@ def process_command(command):
             speak("Something went wrong with the AI response.")
 
 def listen_for_command():
+    global IS_SPEAKING
+    if IS_SPEAKING:
+        return ""
     recognizer = sr.Recognizer()
     try:
         with sr.Microphone() as source:
@@ -123,19 +133,26 @@ def listen_for_command():
     except Exception as e:
         print(f"[Listen Error] {e}")
         return ""
-
+    
 # Main Loop
 if __name__ == "__main__":
     print("Nova is ready. Say 'Nova' to start.")
     speak("Nova is ready. Say 'Nova' to start.")
     while True:
-        query = listen_for_command()
-        if any(wake in query for wake in WAKE_WORDS):
-            print("Yes?")
-            speak("Yes?")
-            user_command = listen_for_command()
-            print(f"Command received: {user_command}")
-            if user_command:
-
-                process_command(user_command)
+        wake = listen_for_command()
+        if not wake:
+            continue
+        def is_wake_word(text):
+            return any(re.search(rf"\b{w}\b", text) for w in WAKE_WORDS)
+        if not is_wake_word(wake):
+            continue
+        speak("Yes?")
+        command = listen_for_command()
+        if not command:
+            speak("I didn't hear a command.")
+            continue
+        print(f"Command received: {command}")
+        process_command(command)
+        # cooldown to prevent re-trigger
+        time.sleep(2.5)
 
