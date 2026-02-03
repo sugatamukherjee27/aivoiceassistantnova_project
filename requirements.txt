@@ -1,0 +1,11 @@
+pygame
+requests
+gTTS
+SpeechRecognition
+feedparser
+pywhatkit
+newspaper3k
+nltk
+transformers
+torch
+duckduckgo_search
