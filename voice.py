@@ -71,15 +71,11 @@ def get_detailed_briefing():
         return
 
     for i, entry in enumerate(feed.entries[:3]):
-        # The title often includes the source (e.g., "Title - Source")
-        # Let's clean it up for the AI
         raw_title = entry.title
         
         speak(f"Story {i+1}: {raw_title}")
         
         if ai_engine:
-            # We use the title and the summary provided by the RSS feed itself
-            # This avoids the need to download external web pages
             snippet = entry.get('summary', 'No description available.')
             prompt = f"Explain the significance of this news headline in one sentence: {raw_title}\n\nAnalysis:"
             
@@ -109,7 +105,6 @@ def listen(prompt_mode=False):
             if prompt_mode:
                 print("👂 Listening for command...")
             r.adjust_for_ambient_noise(source, duration=0.5)
-            # Short timeout for wake word, longer for commands
             timeout_limit = 5 if not prompt_mode else 8
             audio = r.listen(source, timeout=timeout_limit, phrase_time_limit=6)
             return r.recognize_google(audio).lower()
@@ -123,14 +118,11 @@ def main():
     
     while True:
         print("💤 Standing by... (Say 'Nova')")
-        # Step 1: Wait for wake word
         voice_input = listen(prompt_mode=False)
 
         if any(word in voice_input for word in WAKE_WORDS):
-            # Step 2: Acknowledge
             speak("Yes?") 
             
-            # Step 3: Listen for actual command
             command = listen(prompt_mode=True)
             
             if command:
