@@ -70,7 +70,7 @@ def get_detailed_briefing():
         speak("I couldn't retrieve any news at the moment.")
         return
 
-    for i, entry in enumerate(feed.entries[:3]):
+    for i, entry in enumerate(feed.entries[:5]):
         raw_title = entry.title
         
         speak(f"Story {i+1}: {raw_title}")
