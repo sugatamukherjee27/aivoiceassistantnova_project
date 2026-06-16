@@ -1,11 +1,29 @@
-pygame
+# pygame-ce
+# requests
+# gTTS
+# SpeechRecognition
+# feedparser
+# pywhatkit
+# newspaper3k
+# nltk
+# transformers
+# torch
+# duckduckgo_search
+
+# Core Utilities & Networking
 requests
-gTTS
-SpeechRecognition
-feedparser
-pywhatkit
-newspaper3k
-nltk
-transformers
+python-dotenv
+
+# Audio Pipeline Support & Utilities
+pydub
+ffmpeg-python
+soundfile
+
+# Local AI Transcription & Tensor Framework
+numpy>=2.0.0
 torch
-duckduckgo_search
+openai-whisper
+
+# Python 3.13+ Legacy Audio Compatibility Shims
+standard-aifc; python_version >= "3.13"
+standard-sunau; python_version >= "3.13"
