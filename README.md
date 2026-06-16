@@ -1,6 +1,3 @@
-Here is the updated, clean, and comprehensive `README.md` reflecting the actual architecture, dependencies, and execution details found in your updated code (`voice.py`) and requirements definitions.
-
----
 
 # Nova Pro AI Assistant
 
