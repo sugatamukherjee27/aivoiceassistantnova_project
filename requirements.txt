@@ -1,15 +1,3 @@
-# pygame-ce
-# requests
-# gTTS
-# SpeechRecognition
-# feedparser
-# pywhatkit
-# newspaper3k
-# nltk
-# transformers
-# torch
-# duckduckgo_search
-
 # Core Utilities & Networking
 requests
 python-dotenv
